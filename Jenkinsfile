@@ -32,6 +32,23 @@ pipeline {
             }
         }
 
+        stage('Android Lint') {
+            steps {
+                echo 'Running Android Lint checks...'
+                bat 'gradlew.bat lintDebug'
+                echo 'Lint checks completed'
+            }
+            post {
+                always {
+                    echo 'Archiving Lint report...'
+                    archiveArtifacts(
+                        artifacts: 'app/build/reports/lint-results-debug.html',
+                        allowEmptyArchive: true
+                    )
+                }
+            }
+        }
+
         stage('Build Debug APK') {
             steps {
                 echo 'Building Debug APK...'
@@ -63,7 +80,6 @@ pipeline {
     post {
         success {
             echo "Android Pipeline #${BUILD_NUMBER} completed successfully!"
-            echo "APK available at: app/build/outputs/apk/debug/app-debug.apk"
             mail(
                 to: 'akshaanshs@gmail.com',
                 subject: "SUCCESS: Android Build #${BUILD_NUMBER}",
