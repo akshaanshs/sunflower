@@ -21,7 +21,6 @@ pipeline {
                 echo 'Verifying build environment...'
                 bat 'java -version'
                 bat 'echo ANDROID_HOME = %ANDROID_HOME%'
-                bat 'dir "%ANDROID_HOME%\\build-tools"'
             }
         }
 
@@ -40,7 +39,6 @@ pipeline {
             }
             post {
                 always {
-                    echo 'Archiving Lint report...'
                     archiveArtifacts(
                         artifacts: 'app/build/reports/lint-results-debug.html',
                         allowEmptyArchive: true
@@ -49,10 +47,22 @@ pipeline {
             }
         }
 
-        stage('Build Debug APK') {
-            steps {
-                echo 'Building Debug APK...'
-                bat 'gradlew.bat assembleDebug'
+        stage('Build Variants') {
+            parallel {
+                stage('Build Debug APK') {
+                    steps {
+                        echo 'Building Debug APK...'
+                        bat 'gradlew.bat assembleDebug'
+                        echo 'Debug APK built successfully'
+                    }
+                }
+                stage('Build Release APK') {
+                    steps {
+                        echo 'Building Release APK...'
+                        bat 'gradlew.bat assembleRelease'
+                        echo 'Release APK built successfully'
+                    }
+                }
             }
         }
 
@@ -63,16 +73,21 @@ pipeline {
             }
         }
 
-        stage('Archive APK') {
+        stage('Archive Artifacts') {
             steps {
-                echo 'Archiving APK artifact...'
+                echo 'Archiving build artifacts...'
                 archiveArtifacts(
                     artifacts: 'app/build/outputs/apk/debug/app-debug.apk',
                     fingerprint: true,
                     onlyIfSuccessful: true
                 )
-                echo "APK archived successfully"
+                archiveArtifacts(
+                    artifacts: 'app/build/outputs/apk/release/app-release-unsigned.apk',
+                    fingerprint: true,
+                    onlyIfSuccessful: true
+                )
                 echo "Build Number: ${BUILD_NUMBER}"
+                echo "Both APKs archived successfully"
             }
         }
     }
@@ -83,7 +98,7 @@ pipeline {
             mail(
                 to: 'akshaanshs@gmail.com',
                 subject: "SUCCESS: Android Build #${BUILD_NUMBER}",
-                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nAPK: app-debug.apk\nStatus: SUCCESS\nURL: ${BUILD_URL}"
+                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nDebug APK: app-debug.apk\nRelease APK: app-release-unsigned.apk\nStatus: SUCCESS\nURL: ${BUILD_URL}"
             )
         }
         failure {
