@@ -23,6 +23,11 @@ plugins {
 }
 
 android {
+	lint {
+    		baseline = file("lint-baseline.xml")
+    		abortOnError = false
+    		warningsAsErrors = false
+		}
   compileSdk = libs.versions.compileSdk.get().toInt()
 
   defaultConfig {

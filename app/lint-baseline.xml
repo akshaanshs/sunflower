@@ -1,0 +1,1225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.4.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.4.0)" variant="all" version="8.4.0">
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.4.0 is available: 9.2.1. (There is also a newer version of 8.4.𝑥 available, if upgrading to 9.2.1 is difficult: 8.4.2)"
+        errorLine1="androidGradlePlugin = &quot;8.4.0&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="19"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.4.0 is available: 9.2.1. (There is also a newer version of 8.4.𝑥 available, if upgrading to 9.2.1 is difficult: 8.4.2)"
+        errorLine1="androidGradlePlugin = &quot;8.4.0&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="19"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.4.0 is available: 9.2.1. (There is also a newer version of 8.4.𝑥 available, if upgrading to 9.2.1 is difficult: 8.4.2)"
+        errorLine1="androidGradlePlugin = &quot;8.4.0&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="19"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.test than 8.4.0 is available: 9.2.1. (There is also a newer version of 8.4.𝑥 available, if upgrading to 9.2.1 is difficult: 8.4.2)"
+        errorLine1="androidGradlePlugin = &quot;8.4.0&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="19"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.test than 8.4.0 is available: 9.2.1. (There is also a newer version of 8.4.𝑥 available, if upgrading to 9.2.1 is difficult: 8.4.2)"
+        errorLine1="androidGradlePlugin = &quot;8.4.0&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="19"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.test than 8.4.0 is available: 9.2.1. (There is also a newer version of 8.4.𝑥 available, if upgrading to 9.2.1 is difficult: 8.4.2)"
+        errorLine1="androidGradlePlugin = &quot;8.4.0&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="19"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.9.0 is available: 1.13.0"
+        errorLine1="activityCompose = &quot;1.9.0&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="18"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.9.0 is available: 1.13.0"
+        errorLine1="activityCompose = &quot;1.9.0&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="18"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.activity:activity-compose than 1.9.0 is available: 1.13.0"
+        errorLine1="activityCompose = &quot;1.9.0&quot;"
+        errorLine2="                  ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="18"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.benchmark:benchmark-macro-junit4 than 1.2.4 is available: 1.4.1"
+        errorLine1="benchmark = &quot;1.2.4&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.benchmark:benchmark-macro-junit4 than 1.2.4 is available: 1.4.1"
+        errorLine1="benchmark = &quot;1.2.4&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.benchmark:benchmark-macro-junit4 than 1.2.4 is available: 1.4.1"
+        errorLine1="benchmark = &quot;1.2.4&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2024.05.00 is available: 2026.05.01"
+        errorLine1="composeBom = &quot;2024.05.00&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="25"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2024.05.00 is available: 2026.05.01"
+        errorLine1="composeBom = &quot;2024.05.00&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="25"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose:compose-bom than 2024.05.00 is available: 2026.05.01"
+        errorLine1="composeBom = &quot;2024.05.00&quot;"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="25"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.constraintlayout:constraintlayout-compose than 1.0.1 is available: 1.1.1"
+        errorLine1="constraintLayoutCompose = &quot;1.0.1&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="27"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.constraintlayout:constraintlayout-compose than 1.0.1 is available: 1.1.1"
+        errorLine1="constraintLayoutCompose = &quot;1.0.1&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="27"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.constraintlayout:constraintlayout-compose than 1.0.1 is available: 1.1.1"
+        errorLine1="constraintLayoutCompose = &quot;1.0.1&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="27"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-contrib than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-contrib than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-contrib than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-intents than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-intents than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-intents than 3.5.1 is available: 3.7.0"
+        errorLine1="espresso = &quot;3.5.1&quot;"
+        errorLine2="           ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-navigation-compose than 1.2.0 is available: 1.3.0"
+        errorLine1="hiltNavigationCompose = &quot;1.2.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="37"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-navigation-compose than 1.2.0 is available: 1.3.0"
+        errorLine1="hiltNavigationCompose = &quot;1.2.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="37"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.hilt:hilt-navigation-compose than 1.2.0 is available: 1.3.0"
+        errorLine1="hiltNavigationCompose = &quot;1.2.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="37"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.13.1 is available: 1.19.0"
+        errorLine1="ktx = &quot;1.13.1&quot;"
+        errorLine2="      ~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="43"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.13.1 is available: 1.19.0"
+        errorLine1="ktx = &quot;1.13.1&quot;"
+        errorLine2="      ~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="43"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.core:core-ktx than 1.13.1 is available: 1.19.0"
+        errorLine1="ktx = &quot;1.13.1&quot;"
+        errorLine2="      ~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="43"
+            column="7"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="44"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="44"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="44"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="44"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="44"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.7.0 is available: 2.10.0"
+        errorLine1="lifecycle = &quot;2.7.0&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="44"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.android.material:material than 1.13.0-alpha01 is available: 1.14.0"
+        errorLine1="material = &quot;1.13.0-alpha01&quot;"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="45"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.android.material:material than 1.13.0-alpha01 is available: 1.14.0"
+        errorLine1="material = &quot;1.13.0-alpha01&quot;"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="45"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.android.material:material than 1.13.0-alpha01 is available: 1.14.0"
+        errorLine1="material = &quot;1.13.0-alpha01&quot;"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="45"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.material3:material3 than 1.2.1 is available: 1.4.0"
+        errorLine1="material3 = &quot;1.2.1&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="46"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.material3:material3 than 1.2.1 is available: 1.4.0"
+        errorLine1="material3 = &quot;1.2.1&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="46"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.compose.material3:material3 than 1.2.1 is available: 1.4.0"
+        errorLine1="material3 = &quot;1.2.1&quot;"
+        errorLine2="            ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="46"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test:monitor than 1.6.1 is available: 1.8.0"
+        errorLine1="monitor = &quot;1.6.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="49"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test:monitor than 1.6.1 is available: 1.8.0"
+        errorLine1="monitor = &quot;1.6.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="49"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test:monitor than 1.6.1 is available: 1.8.0"
+        errorLine1="monitor = &quot;1.6.1&quot;"
+        errorLine2="          ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="49"
+            column="11"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.7.7 is available: 2.9.8"
+        errorLine1="navigation = &quot;2.7.7&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="50"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.7.7 is available: 2.9.8"
+        errorLine1="navigation = &quot;2.7.7&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="50"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.navigation:navigation-compose than 2.7.7 is available: 2.9.8"
+        errorLine1="navigation = &quot;2.7.7&quot;"
+        errorLine2="             ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="50"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.paging:paging-compose than 3.3.0-rc01 is available: 3.5.0"
+        errorLine1="pagingCompose = &quot;3.3.0-rc01&quot;"
+        errorLine2="                ~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="52"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.paging:paging-compose than 3.3.0-rc01 is available: 3.5.0"
+        errorLine1="pagingCompose = &quot;3.3.0-rc01&quot;"
+        errorLine2="                ~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="52"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.paging:paging-compose than 3.3.0-rc01 is available: 3.5.0"
+        errorLine1="pagingCompose = &quot;3.3.0-rc01&quot;"
+        errorLine2="                ~~~~~~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="52"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.profileinstaller:profileinstaller than 1.3.1 is available: 1.4.1"
+        errorLine1="profileInstaller = &quot;1.3.1&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="53"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.profileinstaller:profileinstaller than 1.3.1 is available: 1.4.1"
+        errorLine1="profileInstaller = &quot;1.3.1&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="53"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.profileinstaller:profileinstaller than 1.3.1 is available: 1.4.1"
+        errorLine1="profileInstaller = &quot;1.3.1&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="53"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-compiler than 2.6.1 is available: 2.8.4"
+        errorLine1="room = &quot;2.6.1&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="55"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-compiler than 2.6.1 is available: 2.8.4"
+        errorLine1="room = &quot;2.6.1&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="55"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-compiler than 2.6.1 is available: 2.8.4"
+        errorLine1="room = &quot;2.6.1&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="55"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-ktx than 2.6.1 is available: 2.8.4"
+        errorLine1="room = &quot;2.6.1&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="55"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-ktx than 2.6.1 is available: 2.8.4"
+        errorLine1="room = &quot;2.6.1&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="55"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.room:room-ktx than 2.6.1 is available: 2.8.4"
+        errorLine1="room = &quot;2.6.1&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="55"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.3.0"
+        errorLine1="testExtJunit = &quot;1.1.5&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="60"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.3.0"
+        errorLine1="testExtJunit = &quot;1.1.5&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="60"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.3.0"
+        errorLine1="testExtJunit = &quot;1.1.5&quot;"
+        errorLine2="               ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="60"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-compose than 2.7.0 is available: 2.10.0"
+        errorLine1="viewModelCompose = &quot;2.7.0&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="63"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-compose than 2.7.0 is available: 2.10.0"
+        errorLine1="viewModelCompose = &quot;2.7.0&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="63"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-compose than 2.7.0 is available: 2.10.0"
+        errorLine1="viewModelCompose = &quot;2.7.0&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="63"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-compose than 2.7.0 is available: 2.10.0"
+        errorLine1="viewModelCompose = &quot;2.7.0&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="63"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-compose than 2.7.0 is available: 2.10.0"
+        errorLine1="viewModelCompose = &quot;2.7.0&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="63"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-compose than 2.7.0 is available: 2.10.0"
+        errorLine1="viewModelCompose = &quot;2.7.0&quot;"
+        errorLine2="                   ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="63"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.9.0 is available: 2.11.2"
+        errorLine1="work = &quot;2.9.0&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="64"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.9.0 is available: 2.11.2"
+        errorLine1="work = &quot;2.9.0&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="64"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.9.0 is available: 2.11.2"
+        errorLine1="work = &quot;2.9.0&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="64"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-testing than 2.9.0 is available: 2.11.2"
+        errorLine1="work = &quot;2.9.0&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="64"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-testing than 2.9.0 is available: 2.11.2"
+        errorLine1="work = &quot;2.9.0&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="64"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.work:work-testing than 2.9.0 is available: 2.11.2"
+        errorLine1="work = &quot;2.9.0&quot;"
+        errorLine2="       ~~~~~~~">
+        <location
+            file="$HOME/sunflower/gradle/libs.versions.toml"
+            line="64"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="DataBindingWithoutKapt"
+        message="If you plan to use data binding in a Kotlin project, you should apply the kotlin-kapt plugin."
+        errorLine1="    dataBinding = true"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="80"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;ca&quot; (Catalan) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_needs_suffix&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-ca/strings.xml"
+            line="34"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;es&quot; (Spanish) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_needs_suffix&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-es/strings.xml"
+            line="34"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;fr&quot; (French) the following quantity should also be defined: `many` (e.g. &quot;1000000 de jours&quot;)"
+        errorLine1="    &lt;plurals name=&quot;watering_needs_suffix&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-fr/strings.xml"
+            line="34"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;it&quot; (Italian) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_needs_suffix&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-it/strings.xml"
+            line="34"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;pt&quot; (Portuguese) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_needs_suffix&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-pt/strings.xml"
+            line="36"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;ca&quot; (Catalan) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_next&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-ca/strings.xml"
+            line="39"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;es&quot; (Spanish) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_next&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-es/strings.xml"
+            line="39"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;fr&quot; (French) the following quantity should also be defined: `many` (e.g. &quot;1000000 de jours&quot;)"
+        errorLine1="    &lt;plurals name=&quot;watering_next&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-fr/strings.xml"
+            line="39"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;it&quot; (Italian) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_next&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-it/strings.xml"
+            line="39"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingQuantity"
+        message="For locale &quot;pt&quot; (Portuguese) the following quantity should also be defined: `many`"
+        errorLine1="    &lt;plurals name=&quot;watering_next&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-pt/strings.xml"
+            line="41"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;gallery_title&quot; is not translated in &quot;bn&quot; (Bangla)"
+        errorLine1="    &lt;string name=&quot;gallery_title&quot; translation_description=&quot;Title for the photo gallery screen&quot;>Photos by Unsplash&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="35"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;gallery_content_description&quot; is not translated in &quot;bn&quot; (Bangla)"
+        errorLine1="    &lt;string name=&quot;gallery_content_description&quot; translation_description=&quot;Content description for the clickable image to navigate to the gallery screen&quot;>Navigate to gallery screen&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="52"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="Untranslatable"
+        message="The resource string &quot;a11y_back&quot; has been marked as translatable=&quot;false&quot; elsewhere (usually in the `values` folder), but is translated to &quot;vi&quot; (Vietnamese) here"
+        errorLine1="    &lt;string name=&quot;a11y_back&quot;>Trở lại&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-vi/strings.xml"
+            line="46"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ImpliedQuantity"
+        message="The quantity `&apos;one&apos;` matches more than one specific number in this locale (0, 1), but the message did not include a formatting argument (such as `%d`). This is usually an internationalization error. See full issue explanation for more."
+        errorLine1="        &lt;item quantity=&quot;one&quot;>প্রতি দিন&lt;/item>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-bn/strings.xml"
+            line="36"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ImpliedQuantity"
+        message="The quantity `&apos;one&apos;` matches more than one specific number in this locale (0, 1), but the message did not include a formatting argument (such as `%d`). This is usually an internationalization error. See full issue explanation for more."
+        errorLine1="        &lt;item quantity=&quot;one&quot;>আগামী কাল জল দিন।&lt;/item>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values-bn/strings.xml"
+            line="41"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UnusedQuantity"
+        message="For language &quot;vi&quot; (Vietnamese) the following quantities are not relevant: `one`"
+        errorLine1="    &lt;plurals name=&quot;watering_needs_suffix&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-vi/strings.xml"
+            line="34"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedQuantity"
+        message="For language &quot;vi&quot; (Vietnamese) the following quantities are not relevant: `one`"
+        errorLine1="    &lt;plurals name=&quot;watering_next&quot;>"
+        errorLine2="    ^">
+        <location
+            file="src/main/res/values-vi/strings.xml"
+            line="39"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.fab_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;fab_margin&quot;>16dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="22"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.fab_bottom_padding` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;fab_bottom_padding&quot;>72dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="25"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.margin_extra_small` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;margin_extra_small&quot;>4dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="31"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.card_elevation` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;card_elevation&quot;>2dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="39"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.card_corner_radius` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;card_corner_radius&quot;>12dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="40"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.toolbar_elevation` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;toolbar_elevation&quot;>5dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="43"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.gallery_header_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;gallery_header_margin&quot;>72dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="48"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.plant_description_min_height` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;plant_description_min_height&quot;>555dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="51"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_launcher_background.xml"
+            line="18"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.available` appears to be unused"
+        errorLine1="    &lt;string name=&quot;available&quot; translation_description=&quot;Text for the header of the plant list page indicating the available plants for users to choose from.&quot;>Available Plants&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="26"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.plant_details_title` appears to be unused"
+        errorLine1="    &lt;string name=&quot;plant_details_title&quot; translation_description=&quot;Title for the plant details screen where the user can see the details for a specific plant.&quot;>Plant details&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="27"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.gallery_content_description` appears to be unused"
+        errorLine1="    &lt;string name=&quot;gallery_content_description&quot; translation_description=&quot;Content description for the clickable image to navigate to the gallery screen&quot;>Navigate to gallery screen&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="52"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.plant_detail_image_content_description` appears to be unused"
+        errorLine1="    &lt;string name=&quot;plant_detail_image_content_description&quot; translation_description=&quot;Content description for the header / hero image that is show at the top of the plant detail screen.&quot;>Image of plant&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="53"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="18"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive roundIcon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+            line="18"
+            column="1"/>
+    </issue>
+
+</issues>
