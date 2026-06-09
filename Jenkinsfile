@@ -6,6 +6,7 @@ pipeline {
         ANDROID_SDK_ROOT = "C:\\Users\\aksha\\AppData\\Local\\Android\\Sdk"
         JAVA_HOME = "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.19.10-hotspot"
         PATH = "${JAVA_HOME}\\bin;${ANDROID_HOME}\\platform-tools;${ANDROID_HOME}\\tools;${env.PATH}"
+        FIREBASE_APP_ID = "1:460964823455:android:c47b12e5c3b6351ebd3daa"
     }
 
     stages {
@@ -88,6 +89,25 @@ pipeline {
             }
         }
 
+        stage('Distribute to Firebase') {
+            steps {
+                echo 'Distributing APK to Firebase App Distribution...'
+                withCredentials([
+                    string(credentialsId: 'firebase-token', variable: 'FIREBASE_TOKEN')
+                ]) {
+                    bat """
+                        firebase appdistribution:distribute ^
+                        app\\build\\outputs\\apk\\debug\\app-debug.apk ^
+                        --app %FIREBASE_APP_ID% ^
+                        --token %FIREBASE_TOKEN% ^
+                        --release-notes "Build ${BUILD_NUMBER} - Automated build from Jenkins" ^
+                        --debug
+                    """
+                }
+                echo 'APK distributed to Firebase successfully'
+            }
+        }
+
         stage('Archive Artifacts') {
             steps {
                 echo 'Archiving build artifacts...'
@@ -113,7 +133,7 @@ pipeline {
             mail(
                 to: 'akshaanshs@gmail.com',
                 subject: "SUCCESS: Android Build ${BUILD_NUMBER}",
-                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nDebug APK: app-debug.apk\nSigned Release APK: app-release-signed.apk\nStatus: SUCCESS\nURL: ${BUILD_URL}"
+                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nDebug APK: app-debug.apk\nSigned Release APK: app-release-signed.apk\nFirebase: Distributed to testers\nStatus: SUCCESS\nURL: ${BUILD_URL}"
             )
         }
         failure {
