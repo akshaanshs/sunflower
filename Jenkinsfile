@@ -93,15 +93,13 @@ pipeline {
             steps {
                 echo 'Distributing APK to Firebase App Distribution...'
                 withCredentials([
-                    string(credentialsId: 'firebase-token', variable: 'FIREBASE_TOKEN')
+                    file(credentialsId: 'firebase-service-account', variable: 'GOOGLE_APPLICATION_CREDENTIALS')
                 ]) {
                     bat """
                         "C:\\Users\\aksha\\AppData\\Roaming\\npm\\firebase.cmd" appdistribution:distribute ^
                         app\\build\\outputs\\apk\\debug\\app-debug.apk ^
                         --app %FIREBASE_APP_ID% ^
-                        --token %FIREBASE_TOKEN% ^
-                        --release-notes "Build ${BUILD_NUMBER} - Automated build from Jenkins" ^
-                        --debug
+                        --release-notes "Build ${BUILD_NUMBER} - Automated build from Jenkins"
                     """
                 }
                 echo 'APK distributed to Firebase successfully'
