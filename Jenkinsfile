@@ -73,24 +73,9 @@ pipeline {
                     file(credentialsId: 'android-keystore', variable: 'KEYSTORE_FILE'),
                     string(credentialsId: 'android-keystore-password', variable: 'KEYSTORE_PASSWORD')
                 ]) {
-                    bat """
-                        "%JAVA_HOME%\\bin\\jarsigner.exe" ^
-                        -verbose ^
-                        -sigalg SHA256withRSA ^
-                        -digestalg SHA-256 ^
-                        -keystore "%KEYSTORE_FILE%" ^
-                        -storepass %KEYSTORE_PASSWORD% ^
-                        -keypass %KEYSTORE_PASSWORD% ^
-                        app\\build\\outputs\\apk\\release\\app-release-unsigned.apk ^
-                        sunflower
-                    """
+                    bat "\"${JAVA_HOME}\\bin\\jarsigner.exe\" -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore \"%KEYSTORE_FILE%\" -storepass %KEYSTORE_PASSWORD% -keypass %KEYSTORE_PASSWORD% app\\build\\outputs\\apk\\release\\app-release-unsigned.apk sunflower"
                     echo 'APK signed successfully'
-                    bat """
-                        "%ANDROID_HOME%\\build-tools\\34.0.0\\zipalign.exe" ^
-                        -v 4 ^
-                        app\\build\\outputs\\apk\\release\\app-release-unsigned.apk ^
-                        app\\build\\outputs\\apk\\release\\app-release-signed.apk
-                    """
+                    bat "\"%ANDROID_HOME%\\build-tools\\34.0.0\\zipalign.exe\" -v 4 app\\build\\outputs\\apk\\release\\app-release-unsigned.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk"
                     echo 'APK aligned successfully'
                 }
             }
@@ -117,6 +102,30 @@ pipeline {
                     onlyIfSuccessful: true
                 )
                 echo "Build Number: ${BUILD_NUMBER}"
-                echo "Debug APK: app-debug.apk"
-                echo "Signed Release APK: app-release-signed.apk"
-                echo "Both APKs archived successfully
+                echo "Both APKs archived successfully"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Android Pipeline ${BUILD_NUMBER} completed successfully!"
+            mail(
+                to: 'akshaanshs@gmail.com',
+                subject: "SUCCESS: Android Build ${BUILD_NUMBER}",
+                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nDebug APK: app-debug.apk\nSigned Release APK: app-release-signed.apk\nStatus: SUCCESS\nURL: ${BUILD_URL}"
+            )
+        }
+        failure {
+            echo "Android Pipeline ${BUILD_NUMBER} failed!"
+            mail(
+                to: 'akshaanshs@gmail.com',
+                subject: "FAILED: Android Build ${BUILD_NUMBER}",
+                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nStatus: FAILED\nURL: ${BUILD_URL}console"
+            )
+        }
+        always {
+            echo 'Android pipeline finished.'
+        }
+    }
+}
