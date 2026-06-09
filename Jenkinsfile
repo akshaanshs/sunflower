@@ -96,7 +96,7 @@ pipeline {
                     string(credentialsId: 'firebase-token', variable: 'FIREBASE_TOKEN')
                 ]) {
                     bat """
-                        firebase appdistribution:distribute ^
+                        "C:\\Users\\aksha\\AppData\\Roaming\\npm\\firebase.cmd" appdistribution:distribute ^
                         app\\build\\outputs\\apk\\debug\\app-debug.apk ^
                         --app %FIREBASE_APP_ID% ^
                         --token %FIREBASE_TOKEN% ^
