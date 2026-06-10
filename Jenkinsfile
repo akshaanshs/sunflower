@@ -88,6 +88,20 @@ pipeline {
                 bat 'gradlew.bat testDebugUnitTest'
             }
         }
+stage('Firebase Test Lab') {
+    steps {
+        echo 'Running tests on Firebase Test Lab...'
+        bat """
+            gcloud firebase test android run ^
+            --type robo ^
+            --app app\\build\\outputs\\apk\\debug\\app-debug.apk ^
+            --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait ^
+            --timeout 3m ^
+            --project sunflower-cicd
+        """
+        echo 'Firebase Test Lab completed successfully'
+    }
+}
 
         stage('Distribute to Firebase') {
             steps {

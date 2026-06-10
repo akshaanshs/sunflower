@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "460964823455",
+    "project_id": "sunflower-cicd",
+    "storage_bucket": "sunflower-cicd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460964823455:android:c47b12e5c3b6351ebd3daa",
+        "android_client_info": {
+          "package_name": "com.google.samples.apps.sunflower"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB610GQD16M0L_E_FrfdXlDWIGFGmAs1Ik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

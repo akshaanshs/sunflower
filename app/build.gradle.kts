@@ -15,6 +15,8 @@
  */
 
 plugins {
+id("com.google.gms.google-services")
+id("com.google.firebase.firebase-perf")
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.ksp)
@@ -110,6 +112,7 @@ androidComponents {
 }
 
 dependencies {
+implementation("com.google.firebase:firebase-perf:21.0.1")
   ksp(libs.androidx.room.compiler)
   ksp(libs.hilt.android.compiler)
   implementation(libs.androidx.core.ktx)
