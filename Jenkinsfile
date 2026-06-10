@@ -145,3 +145,8 @@ pipeline {
                 body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nStatus: FAILED\nURL: ${BUILD_URL}console"
             )
         }
+        always {
+            echo 'Android pipeline finished.'
+        }
+    }
+}
