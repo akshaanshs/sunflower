@@ -90,12 +90,17 @@ pipeline {
         }
 
         stage('Firebase Test Lab') {
-            steps {
-                echo 'Running tests on Firebase Test Lab...'
-                bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run --type robo --app app\\build\\outputs\\apk\\debug\\app-debug.apk --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait --timeout 3m --project sunflower-cicd'
-                echo 'Firebase Test Lab completed successfully'
-            }
+    steps {
+        echo 'Running tests on Firebase Test Lab...'
+        withCredentials([
+            file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')
+        ]) {
+            bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" auth activate-service-account --key-file="%GCLOUD_KEY%" --project=sunflower-cicd'
+            bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run --type robo --app app\\build\\outputs\\apk\\debug\\app-debug.apk --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait --timeout 3m --project sunflower-cicd'
         }
+        echo 'Firebase Test Lab completed successfully'
+    }
+}
 
         stage('Distribute to Firebase') {
             steps {
