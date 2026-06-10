@@ -88,26 +88,14 @@ pipeline {
                 bat 'gradlew.bat testDebugUnitTest'
             }
         }
-stage('Firebase Test Lab') {
-    steps {
-        echo 'Running tests on Firebase Test Lab...'
-        bat """
-    "C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run ^
-    --type robo ^
-    --app app\\build\\outputs\\apk\\debug\\app-debug.apk ^
-    --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait ^
-    --timeout 3m ^
-    --project sunflower-cicd
-"""
-            --type robo ^
-            --app app\\build\\outputs\\apk\\debug\\app-debug.apk ^
-            --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait ^
-            --timeout 3m ^
-            --project sunflower-cicd
-        """
-        echo 'Firebase Test Lab completed successfully'
-    }
-}
+
+        stage('Firebase Test Lab') {
+            steps {
+                echo 'Running tests on Firebase Test Lab...'
+                bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run --type robo --app app\\build\\outputs\\apk\\debug\\app-debug.apk --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait --timeout 3m --project sunflower-cicd'
+                echo 'Firebase Test Lab completed successfully'
+            }
+        }
 
         stage('Distribute to Firebase') {
             steps {
@@ -115,12 +103,7 @@ stage('Firebase Test Lab') {
                 withCredentials([
                     file(credentialsId: 'firebase-service-account', variable: 'GOOGLE_APPLICATION_CREDENTIALS')
                 ]) {
-                    bat """
-                        "C:\\Users\\aksha\\AppData\\Roaming\\npm\\firebase.cmd" appdistribution:distribute ^
-                        app\\build\\outputs\\apk\\debug\\app-debug.apk ^
-                        --app %FIREBASE_APP_ID% ^
-                        --release-notes "Build ${BUILD_NUMBER} - Automated build from Jenkins"
-                    """
+                    bat '"C:\\Users\\aksha\\AppData\\Roaming\\npm\\firebase.cmd" appdistribution:distribute app\\build\\outputs\\apk\\debug\\app-debug.apk --app %FIREBASE_APP_ID% --release-notes "Build ${BUILD_NUMBER} - Automated build from Jenkins"'
                 }
                 echo 'APK distributed to Firebase successfully'
             }
@@ -151,7 +134,7 @@ stage('Firebase Test Lab') {
             mail(
                 to: 'akshaanshs@gmail.com',
                 subject: "SUCCESS: Android Build ${BUILD_NUMBER}",
-                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nDebug APK: app-debug.apk\nSigned Release APK: app-release-signed.apk\nFirebase: Distributed to testers\nStatus: SUCCESS\nURL: ${BUILD_URL}"
+                body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nAPKs archived\nFirebase Test Lab: Passed\nStatus: SUCCESS\nURL: ${BUILD_URL}"
             )
         }
         failure {
@@ -162,8 +145,3 @@ stage('Firebase Test Lab') {
                 body: "Job: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nStatus: FAILED\nURL: ${BUILD_URL}console"
             )
         }
-        always {
-            echo 'Android pipeline finished.'
-        }
-    }
-}
