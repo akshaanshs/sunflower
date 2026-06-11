@@ -81,32 +81,35 @@ pipeline {
                 }
             }
         }
-stage('DAST Security Scan') {
-    steps {
-        echo 'Starting DAST Security Scan with MobSF...'
-        withCredentials([
-            string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_API_KEY')
-        ]) {
-            bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
-            bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
-            bat 'ping -n 60 127.0.0.1 > nul'
-            bat 'curl -F "file=@app\\build\\outputs\\apk\\debug\\app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %MOBSF_API_KEY%" -o mobsf_upload.json'
-            bat 'powershell -Command "$hash = (Get-Content mobsf_upload.json | ConvertFrom-Json).hash; curl -X POST http://localhost:8010/api/v1/scan -H \'X-Mobsf-Api-Key: %MOBSF_API_KEY%\' -d \\"scan_type=apk&file_name=app-debug.apk&hash=$hash\\""'
-            bat 'ping -n 60 127.0.0.1 > nul'
-            bat 'powershell -Command "$hash = (Get-Content mobsf_upload.json | ConvertFrom-Json).hash; curl -X POST http://localhost:8010/api/v1/download_pdf -H \'X-Mobsf-Api-Key: %MOBSF_API_KEY%\' -d \\"hash=$hash\\" -o mobsf-security-report.pdf"'
+
+        stage('DAST Security Scan') {
+            steps {
+                echo 'Starting DAST Security Scan with MobSF...'
+                withCredentials([
+                    string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_API_KEY')
+                ]) {
+                    bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
+                    bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
+                    bat 'ping -n 60 127.0.0.1 > nul'
+                    bat 'curl -F "file=@app\\build\\outputs\\apk\\debug\\app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %MOBSF_API_KEY%" -o mobsf_upload.json'
+                    bat 'powershell -Command "$hash = (Get-Content mobsf_upload.json | ConvertFrom-Json).hash; curl -X POST http://localhost:8010/api/v1/scan -H \'X-Mobsf-Api-Key: %MOBSF_API_KEY%\' -d \\"scan_type=apk&file_name=app-debug.apk&hash=$hash\\""'
+                    bat 'ping -n 60 127.0.0.1 > nul'
+                    bat 'powershell -Command "$hash = (Get-Content mobsf_upload.json | ConvertFrom-Json).hash; curl -X POST http://localhost:8010/api/v1/download_pdf -H \'X-Mobsf-Api-Key: %MOBSF_API_KEY%\' -d \\"hash=$hash\\" -o mobsf-security-report.pdf"'
+                }
+                echo 'DAST Security Scan completed'
+            }
+            post {
+                always {
+                    archiveArtifacts(
+                        artifacts: 'mobsf-security-report.pdf',
+                        allowEmptyArchive: true
+                    )
+                    bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
+                }
+            }
         }
-        echo 'DAST Security Scan completed'
-    }
-    post {
-        always {
-            archiveArtifacts(
-                artifacts: 'mobsf-security-report.pdf',
-                allowEmptyArchive: true
-            )
-            bat 'docker stop mobsf-jenkins && docker rm mobsf-jenkins'
-        }
-    }
-}        stage('Run Unit Tests') {
+
+        stage('Run Unit Tests') {
             steps {
                 echo 'Running unit tests...'
                 bat 'gradlew.bat testDebugUnitTest'
@@ -114,17 +117,17 @@ stage('DAST Security Scan') {
         }
 
         stage('Firebase Test Lab') {
-    steps {
-        echo 'Running tests on Firebase Test Lab...'
-        withCredentials([
-            file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')
-        ]) {
-            bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" auth activate-service-account --key-file="%GCLOUD_KEY%" --project=sunflower-cicd'
-            bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run --type robo --app app\\build\\outputs\\apk\\debug\\app-debug.apk --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait --timeout 3m --project sunflower-cicd'
+            steps {
+                echo 'Running tests on Firebase Test Lab...'
+                withCredentials([
+                    file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')
+                ]) {
+                    bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" auth activate-service-account --key-file="%GCLOUD_KEY%" --project=sunflower-cicd'
+                    bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run --type robo --app app\\build\\outputs\\apk\\debug\\app-debug.apk --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait --timeout 3m --project sunflower-cicd'
+                }
+                echo 'Firebase Test Lab completed successfully'
+            }
         }
-        echo 'Firebase Test Lab completed successfully'
-    }
-}
 
         stage('Distribute to Firebase') {
             steps {
