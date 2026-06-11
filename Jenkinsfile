@@ -81,7 +81,31 @@ pipeline {
                 }
             }
         }
-
+stage('DAST Security Scan') {
+    steps {
+        echo 'Starting DAST Security Scan with MobSF...'
+        withCredentials([
+            string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_API_KEY')
+        ]) {
+            bat 'docker run -d --name mobsf-jenkins -p 8009:8000 opensecurity/mobile-security-framework-mobsf:latest'
+            bat 'ping -n 30 127.0.0.1 > nul'
+            bat 'curl -F "file=@app\\build\\outputs\\apk\\debug\\app-debug.apk" http://localhost:8009/api/v1/upload -H "X-Mobsf-Api-Key: %MOBSF_API_KEY%" -o mobsf_upload.json'
+            bat 'for /f "tokens=*" %%i in (\'powershell -Command "(Get-Content mobsf_upload.json | ConvertFrom-Json).hash"\') do set APK_HASH=%%i && curl -X POST http://localhost:8009/api/v1/scan -H "X-Mobsf-Api-Key: %MOBSF_API_KEY%" -d "scan_type=apk&file_name=app-debug.apk&hash=%%i"'
+            bat 'ping -n 60 127.0.0.1 > nul'
+            bat 'for /f "tokens=*" %%i in (\'powershell -Command "(Get-Content mobsf_upload.json | ConvertFrom-Json).hash"\') do curl -X POST http://localhost:8009/api/v1/download_pdf -H "X-Mobsf-Api-Key: %MOBSF_API_KEY%" -d "hash=%%i" -o mobsf-security-report.pdf'
+        }
+        echo 'DAST Security Scan completed'
+    }
+    post {
+        always {
+            archiveArtifacts(
+                artifacts: 'mobsf-security-report.pdf',
+                allowEmptyArchive: true
+            )
+            bat 'docker stop mobsf-jenkins && docker rm mobsf-jenkins'
+        }
+    }
+}
         stage('Run Unit Tests') {
             steps {
                 echo 'Running unit tests...'
