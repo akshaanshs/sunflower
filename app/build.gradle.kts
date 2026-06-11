@@ -25,6 +25,11 @@ id("com.google.firebase.firebase-perf")
 }
 
 android {
+configurations.all {
+    resolutionStrategy {
+        force("com.google.guava:guava:31.1-android")
+    }
+}
 	lint {
     		baseline = file("lint-baseline.xml")
     		abortOnError = false
