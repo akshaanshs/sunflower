@@ -112,6 +112,7 @@ androidComponents {
 }
 
 dependencies {
+implementation("com.google.guava:guava:31.1-android")
 implementation("com.google.firebase:firebase-analytics-ktx:22.0.0")
 implementation("com.google.firebase:firebase-messaging-ktx:24.0.0")
 implementation("com.google.firebase:firebase-perf:21.0.1")
