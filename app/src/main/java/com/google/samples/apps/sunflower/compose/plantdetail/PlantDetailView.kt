@@ -97,6 +97,9 @@ import com.google.samples.apps.sunflower.data.Plant
 import com.google.samples.apps.sunflower.databinding.ItemPlantDescriptionBinding
 import com.google.samples.apps.sunflower.ui.SunflowerTheme
 import com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
 /**
  * As these callbacks are passed in through multiple Composables, to avoid having to name
@@ -109,7 +112,7 @@ data class PlantDetailsCallbacks(
     val onGalleryClick: (Plant) -> Unit
 )
 
-@Composable
+    @Composable
 fun PlantDetailsScreen(
     plantDetailsViewModel: PlantDetailViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
@@ -121,6 +124,11 @@ fun PlantDetailsScreen(
     val showSnackbar = plantDetailsViewModel.showSnackbar.observeAsState().value
 
     if (plant != null && showSnackbar != null) {
+        // Firebase Analytics Event
+        Firebase.analytics.logEvent("view_plant") {
+            param("plant_name", plant.name)
+            param("plant_id", plant.plantId)
+        }
         Surface {
             TextSnackbarContainer(
                 snackbarText = stringResource(R.string.added_plant_to_garden),
