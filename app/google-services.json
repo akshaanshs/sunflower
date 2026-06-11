@@ -25,5 +25,8 @@
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version": "1",
+  "analytics_property": {
+    "tracking_id": "541300380"
+  }
 }

@@ -15,7 +15,6 @@
  */
 
 package com.google.samples.apps.sunflower.compose.plantdetail
-
 import android.graphics.drawable.Drawable
 import android.text.method.LinkMovementMethod
 import androidx.annotation.VisibleForTesting
@@ -55,7 +54,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -100,6 +98,7 @@ import com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import androidx.compose.runtime.LaunchedEffect as LaunchedEffect1
 
 /**
  * As these callbacks are passed in through multiple Composables, to avoid having to name
@@ -112,7 +111,7 @@ data class PlantDetailsCallbacks(
     val onGalleryClick: (Plant) -> Unit
 )
 
-    @Composable
+@Composable
 fun PlantDetailsScreen(
     plantDetailsViewModel: PlantDetailViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
@@ -124,11 +123,14 @@ fun PlantDetailsScreen(
     val showSnackbar = plantDetailsViewModel.showSnackbar.observeAsState().value
 
     if (plant != null && showSnackbar != null) {
-        // Firebase Analytics Event
-        Firebase.analytics.logEvent("view_plant") {
-            param("plant_name", plant.name)
-            param("plant_id", plant.plantId)
+
+        LaunchedEffect1(plant.plantId) {
+            Firebase.analytics.logEvent("view_plant") {
+                param("plant_name", plant.name)
+                param("plant_id", plant.plantId)
+            }
         }
+
         Surface {
             TextSnackbarContainer(
                 snackbarText = stringResource(R.string.added_plant_to_garden),
