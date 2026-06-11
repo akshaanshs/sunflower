@@ -88,7 +88,7 @@ stage('DAST Security Scan') {
             string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_API_KEY')
         ]) {
             bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
-            bat 'ping -n 30 127.0.0.1 > nul'
+            bat 'ping -n 60 127.0.0.1 > nul'
             bat 'curl -F "file=@app\\build\\outputs\\apk\\debug\\app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %MOBSF_API_KEY%" -o mobsf_upload.json'
             bat 'for /f "tokens=*" %%i in (\'powershell -Command "(Get-Content mobsf_upload.json | ConvertFrom-Json).hash"\') do set APK_HASH=%%i && curl -X POST http://localhost:8010/api/v1/scan -H "X-Mobsf-Api-Key: %MOBSF_API_KEY%" -d "scan_type=apk&file_name=app-debug.apk&hash=%%i"'
             bat 'ping -n 60 127.0.0.1 > nul'
