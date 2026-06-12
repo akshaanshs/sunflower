@@ -90,9 +90,8 @@ pipeline {
         bat 'ping -n 60 127.0.0.1 > nul'
         bat '''
 	@echo off
-	docker logs mobsf-jenkins 2>&1 | findstr "REST API Key" > mobsf_raw.txt
-	for /f "tokens=4" %%a in (mobsf_raw.txt) do set MOBSF_KEY=%%a
-	echo %MOBSF_KEY%> mobsf_api_key.txt
+	docker logs mobsf-jenkins > mobsf_raw.txt 2>&1
+	powershell -Command "Get-Content mobsf_raw.txt | Where-Object { $_ -match 'REST API Key:' } | Select-Object -Last 1 | ForEach-	Object { $_ -replace '.*REST API Key: ', '' } | ForEach-Object { $_ -replace '[^a-fA-F0-9]', '' } | ForEach-Object 	{ $_.Substring(0, [Math]::Min(64, $_.Length)) } | Set-Content mobsf_api_key.txt"
 	type mobsf_api_key.txt
 	'''
         bat '''
