@@ -82,17 +82,23 @@ pipeline {
             }
         }
 
-        stage('DAST Security Scan') {
+stage('DAST Security Scan') {
     steps {
         echo 'Starting DAST Security Scan with MobSF...'
         bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
         bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
         bat 'ping -n 60 127.0.0.1 > nul'
-        bat 'powershell -Command "docker logs mobsf-jenkins 2>&1 | Where-Object { $_ -match \'REST API Key:\' } | Select-Object -First 1 | ForEach-Object { $key = ($_ -split \'REST API Key:\')[1].Trim() -replace \'[^a-fA-F0-9]\',\'\'; Set-Content -Path mobsf_api_key.txt -Value $key; Write-Host (\'Extracted key: \' + $key) }"'
-        bat 'for /f "usebackq tokens=*" %k in (mobsf_api_key.txt) do curl -s -F "file=@app\\build\\outputs\\apk\\debug\\app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %k" -o mobsf_upload.json'
-        bat 'powershell -Command "$key = (Get-Content mobsf_api_key.txt).Trim(); $hash = (Get-Content mobsf_upload.json | ConvertFrom-Json).hash; Write-Host (\'Hash: \' + $hash); curl -s -X POST http://localhost:8010/api/v1/scan -H (\'X-Mobsf-Api-Key: \' + $key) -d (\'scan_type=apk&file_name=app-debug.apk&hash=\' + $hash); Write-Host \'Scan triggered\'"'
-        bat 'ping -n 90 127.0.0.1 > nul'
-        bat 'powershell -Command "$key = (Get-Content mobsf_api_key.txt).Trim(); $hash = (Get-Content mobsf_upload.json | ConvertFrom-Json).hash; curl -s -X POST http://localhost:8010/api/v1/download_pdf -H (\'X-Mobsf-Api-Key: \' + $key) -d (\'hash=\' + $hash) -o mobsf-security-report.pdf; Write-Host (\'PDF bytes: \' + (Get-Item mobsf-security-report.pdf).Length)"'
+        bat 'powershell -Command "docker logs mobsf-jenkins 2>&1 | Where-Object { $_ -match \'REST API Key:\' } | Select-Object -First 1 | ForEach-Object { ($_ -split \'REST API Key:\')[1].Trim() -replace \'[^a-fA-F0-9]\',\'\' } | Set-Content mobsf_api_key.txt; Write-Host (\'Key saved: \' + (Get-Content mobsf_api_key.txt))"'
+        bat '@echo $key = (Get-Content mobsf_api_key.txt).Trim() > mobsf_scan.ps1'
+        bat '@echo $r = (& curl -s -F "file=@app\build\outputs\apk\debug\app-debug.apk" http://localhost:8010/api/v1/upload -H ("X-Mobsf-Api-Key: "+$key)) >> mobsf_scan.ps1'
+        bat '@echo Set-Content mobsf_upload.json $r >> mobsf_scan.ps1'
+        bat '@echo $h = ($r | ConvertFrom-Json).hash >> mobsf_scan.ps1'
+        bat '@echo Write-Host ("Hash: "+$h) >> mobsf_scan.ps1'
+        bat '@echo & curl -s -X POST http://localhost:8010/api/v1/scan -H ("X-Mobsf-Api-Key: "+$key) -d ("scan_type=apk&file_name=app-debug.apk&hash="+$h) >> mobsf_scan.ps1'
+        bat '@echo Start-Sleep -Seconds 90 >> mobsf_scan.ps1'
+        bat '@echo & curl -s -X POST http://localhost:8010/api/v1/download_pdf -H ("X-Mobsf-Api-Key: "+$key) -d ("hash="+$h) -o mobsf-security-report.pdf >> mobsf_scan.ps1'
+        bat '@echo Write-Host ("PDF bytes: "+((Get-Item mobsf-security-report.pdf).Length)) >> mobsf_scan.ps1'
+        bat 'powershell -ExecutionPolicy Bypass -File mobsf_scan.ps1'
         echo 'DAST Security Scan completed'
     }
     post {
@@ -105,7 +111,6 @@ pipeline {
         }
     }
 }
-
         stage('Run Unit Tests') {
             steps {
                 echo 'Running unit tests...'
