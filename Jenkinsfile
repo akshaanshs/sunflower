@@ -88,7 +88,7 @@ pipeline {
                 bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
                 bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
                 bat 'ping -n 60 127.0.0.1 > nul'
-                bat 'powershell -Command "docker logs mobsf-jenkins 2>&1 | Where-Object { $_ -match \'REST API Key:\' } | Select-Object -First 1 | ForEach-Object { ($_ -split \'REST API Key:\')[1].Trim() -replace \'[^a-fA-F0-9]\',\'\' } | Set-Content mobsf_api_key.txt; Write-Host (\'Key: \' + (Get-Content mobsf_api_key.txt))"'
+                bat 'powershell -Command "docker logs mobsf-jenkins 2>&1 | Where-Object { $_ -match \'REST API Key:\' } | Select-Object -First 1 | ForEach-Object { $k = ($_ -split \'REST API Key:\')[1].Trim() -replace \'[^a-fA-F0-9]\',\'\'; Set-Content mobsf_api_key.txt $k.Substring(0,64); Write-Host (\'Key: \' + (Get-Content mobsf_api_key.txt)) }"'
                 bat 'powershell -ExecutionPolicy Bypass -Command "$key=(Get-Content mobsf_api_key.txt).Trim(); $r=(& curl.exe -s -F \'file=@app/build/outputs/apk/debug/app-debug.apk\' http://localhost:8010/api/v1/upload -H (\'X-Mobsf-Api-Key: \'+$key)); Write-Host (\'Upload: \'+$r); Set-Content mobsf_upload.json $r"'
                 bat 'powershell -ExecutionPolicy Bypass -Command "$key=(Get-Content mobsf_api_key.txt).Trim(); $h=((Get-Content mobsf_upload.json|ConvertFrom-Json).hash); Write-Host (\'Hash: \'+$h); & curl.exe -s -X POST http://localhost:8010/api/v1/scan -H (\'X-Mobsf-Api-Key: \'+$key) -d (\'scan_type=apk&file_name=app-debug.apk&hash=\'+$h); Write-Host \'Scan done\'"'
                 bat 'ping -n 90 127.0.0.1 > nul'
