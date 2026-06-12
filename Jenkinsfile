@@ -88,7 +88,8 @@ pipeline {
         bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
         bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
         bat 'ping -n 60 127.0.0.1 > nul'
-        bat 'powershell -Command "docker logs mobsf-jenkins 2>&1 | Where-Object { $_ -match \'REST API Key:\' } | Select-Object -First 1 | ForEach-Object { $k = ($_ -split \'REST API Key:\')[1].Trim() -replace \'[^a-fA-F0-9]\',\'\'; Set-Content mobsf_api_key.txt $k.Substring(0,64) }"'
+        bat 'powershell -Command "docker logs mobsf-jenkins 2>&1 | Where-Object { $_ -match \'REST API Key:\' } | Select-Object -First 1 | ForEach-Object { $k = ($_ -split \'REST API Key:\')[1].Trim() -replace \'[^a-fA-F0-9]\',\'\'; Set-Content mobsf_api_key.txt $k.Substring(0,64) }; exit 0"'
+bat 'type mobsf_api_key.txt''
         bat '''
 @echo off
 set /p MOBSF_KEY=<mobsf_api_key.txt
