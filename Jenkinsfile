@@ -48,6 +48,22 @@ pipeline {
             }
         }
 
+stage('Ktlint Code Style') {
+            steps {
+                echo 'Running Ktlint code style checks...'
+                bat 'gradlew.bat ktlintCheck'
+                echo 'Ktlint checks completed'
+            }
+            post {
+                always {
+                    archiveArtifacts(
+                        artifacts: '**/ktlint*.xml',
+                        allowEmptyArchive: true
+                    )
+                }
+            }
+        }
+
         stage('Build Variants') {
             parallel {
                 stage('Build Debug APK') {

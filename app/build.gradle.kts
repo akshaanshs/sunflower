@@ -15,6 +15,7 @@
  */
 
 plugins {
+id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 id("jacoco")
 id("com.google.gms.google-services")
 id("com.google.firebase.firebase-perf")
