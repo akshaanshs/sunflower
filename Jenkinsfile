@@ -51,7 +51,15 @@ pipeline {
 stage('Ktlint Code Style') {
             steps {
                 echo 'Running Ktlint code style checks...'
-                bat 'gradlew.bat ktlintCheck || echo Ktlint found style violations - check report'
+                bat '''
+@echo off
+gradlew.bat ktlintCheck
+if %ERRORLEVEL% NEQ 0 (
+    echo Ktlint found style violations - continuing build
+    exit 0
+)
+echo Ktlint checks passed
+'''
                 echo 'Ktlint checks completed'
             }
             post {
@@ -63,7 +71,6 @@ stage('Ktlint Code Style') {
                 }
             }
         }
-
         stage('Build Variants') {
             parallel {
                 stage('Build Debug APK') {
