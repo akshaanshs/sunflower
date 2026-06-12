@@ -89,33 +89,37 @@ pipeline {
                 bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
                 bat 'ping -n 90 127.0.0.1 > nul'
                 withCredentials([string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_KEY')]) {
-                    bat '''
+                    bat 'echo %MOBSF_KEY%> mobsf_api_key.txt'
+                }
+                bat '''
 @echo off
+set /p KEY=<mobsf_api_key.txt
 echo Upload starting...
-curl -s -F "file=@app/build/outputs/apk/debug/app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %MOBSF_KEY%" -o mobsf_upload.json
+curl -s -F "file=@app/build/outputs/apk/debug/app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %KEY%" -o mobsf_upload.json
 echo Upload response:
 type mobsf_upload.json
 '''
-                    bat '''
+                bat '''
 @echo off
+set /p KEY=<mobsf_api_key.txt
 for /f "tokens=2 delims=:," %%a in ('findstr "hash" mobsf_upload.json') do set HASH=%%~a
 set HASH=%HASH: =%
 set HASH=%HASH:"=%
 echo Triggering scan for hash: %HASH%
-curl -s -X POST http://localhost:8010/api/v1/scan -H "X-Mobsf-Api-Key: %MOBSF_KEY%" -d "scan_type=apk&file_name=app-debug.apk&hash=%HASH%"
+curl -s -X POST http://localhost:8010/api/v1/scan -H "X-Mobsf-Api-Key: %KEY%" -d "scan_type=apk&file_name=app-debug.apk&hash=%HASH%"
 echo Scan triggered
 '''
-                    bat 'ping -n 120 127.0.0.1 > nul'
-                    bat '''
+                bat 'ping -n 120 127.0.0.1 > nul'
+                bat '''
 @echo off
+set /p KEY=<mobsf_api_key.txt
 for /f "tokens=2 delims=:," %%a in ('findstr "hash" mobsf_upload.json') do set HASH=%%~a
 set HASH=%HASH: =%
 set HASH=%HASH:"=%
 echo Downloading PDF for hash: %HASH%
-curl -s -X POST http://localhost:8010/api/v1/download_pdf -H "X-Mobsf-Api-Key: %MOBSF_KEY%" -d "hash=%HASH%" -o mobsf-security-report.pdf
+curl -s -X POST http://localhost:8010/api/v1/download_pdf -H "X-Mobsf-Api-Key: %KEY%" -d "hash=%HASH%" -o mobsf-security-report.pdf
 for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
 '''
-                }
                 echo 'DAST Security Scan completed'
             }
             post {
