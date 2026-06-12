@@ -59,31 +59,28 @@ pipeline {
                 }
                 stage('Build Release APK') {
                     steps {
-                        echo 'Building Release APK...'
-                        bat 'gradlew.bat assembleRelease'
-                        echo 'Release APK built successfully'
+                        echo 'Building and signing Release APK...'
+                        withCredentials([
+                            file(credentialsId: 'android-keystore', variable: 'KEYSTORE_FILE'),
+                            string(credentialsId: 'android-keystore-password', variable: 'KEYSTORE_PASSWORD')
+                        ]) {
+                            bat 'gradlew.bat assembleRelease -PkeystorePath="%KEYSTORE_FILE%" -PkeystorePassword=%KEYSTORE_PASSWORD%'
+                        }
+                        echo 'Release APK built and signed successfully'
                     }
                 }
             }
         }
 
-        stage('Sign Release APK') {
+        stage('Verify Signed APK') {
             options {
                 timeout(time: 5, unit: 'MINUTES')
             }
             steps {
-                echo 'Signing Release APK...'
-                withCredentials([
-                    file(credentialsId: 'android-keystore', variable: 'KEYSTORE_FILE'),
-                    string(credentialsId: 'android-keystore-password', variable: 'KEYSTORE_PASSWORD')
-                ]) {
-                    bat "\"${JAVA_HOME}\\bin\\jarsigner.exe\" -sigalg SHA256withRSA -digestalg SHA-256 -keystore \"%KEYSTORE_FILE%\" -storepass %KEYSTORE_PASSWORD% -keypass %KEYSTORE_PASSWORD% app\\build\\outputs\\apk\\release\\app-release-unsigned.apk sunflower"
-                    echo 'APK signed successfully'
-                    bat 'del app\\build\\outputs\\apk\\release\\app-release-signed.apk 2>nul & exit 0'
-                    bat '"%ANDROID_HOME%\\build-tools\\34.0.0\\zipalign.exe" -f 4 app\\build\\outputs\\apk\\release\\app-release-unsigned.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk < nul'
-                    bat 'dir app\\build\\outputs\\apk\\release\\app-release-signed.apk'
-                    echo 'APK aligned successfully'
-                }
+                echo 'Verifying signed Release APK...'
+                bat 'copy /Y app\\build\\outputs\\apk\\release\\app-release.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk'
+                bat 'call "%ANDROID_HOME%\\build-tools\\34.0.0\\apksigner.bat" verify app\\build\\outputs\\apk\\release\\app-release-signed.apk'
+                echo 'APK signature verified successfully'
             }
         }
 
