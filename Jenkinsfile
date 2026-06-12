@@ -91,7 +91,8 @@ pipeline {
         bat '''
 	@echo off
 	docker logs mobsf-jenkins 2>&1 | findstr "REST API Key" > mobsf_raw.txt
-	for /f "tokens=4" %%a in (mobsf_raw.txt) do echo %%a> mobsf_api_key.txt
+	for /f "tokens=4" %%a in (mobsf_raw.txt) do set MOBSF_KEY=%%a
+	echo %MOBSF_KEY%> mobsf_api_key.txt
 	type mobsf_api_key.txt
 	'''
         bat '''
