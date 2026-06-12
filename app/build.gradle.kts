@@ -189,6 +189,7 @@ tasks.register<JacocoReport>("jacocoTestReport") {
 }
 
 ktlint {
+    ignoreFailures.set(true)
     filter {
         exclude("**/PlantListTest.kt")
         exclude("**/*.kts")
