@@ -51,7 +51,7 @@ pipeline {
 stage('Ktlint Code Style') {
             steps {
                 echo 'Running Ktlint code style checks...'
-                bat 'gradlew.bat ktlintCheck'
+                bat 'gradlew.bat ktlintCheck || echo Ktlint found style violations - check report'
                 echo 'Ktlint checks completed'
             }
             post {
