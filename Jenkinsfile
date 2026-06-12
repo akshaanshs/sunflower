@@ -83,58 +83,51 @@ pipeline {
         }
 
         stage('DAST Security Scan') {
-    steps {
-        echo 'Starting DAST Security Scan with MobSF...'
-        bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
-        bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
-        bat 'ping -n 60 127.0.0.1 > nul'
-        bat '''
-	@echo off
-	docker logs mobsf-jenkins > mobsf_raw.txt 2>&1
-	powershell -Command "Get-Content mobsf_raw.txt | Where-Object { $_ -match 'REST API Key:' } | Select-Object -Last 1 | ForEach-	Object { $_ -replace '.*REST API Key: ', '' } | ForEach-Object { $_ -replace '[^a-fA-F0-9]', '' } | ForEach-Object 	{ $_.Substring(0, [Math]::Min(64, $_.Length)) } | Set-Content mobsf_api_key.txt"
-	type mobsf_api_key.txt
-	'''
-        bat '''
+            steps {
+                echo 'Starting DAST Security Scan with MobSF...'
+                bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
+                bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
+                bat 'ping -n 90 127.0.0.1 > nul'
+                withCredentials([string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_KEY')]) {
+                    bat '''
 @echo off
-set /p MOBSF_KEY=<mobsf_api_key.txt
-echo Using key: %MOBSF_KEY%
+echo Upload starting...
 curl -s -F "file=@app/build/outputs/apk/debug/app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %MOBSF_KEY%" -o mobsf_upload.json
-echo Upload done
+echo Upload response:
 type mobsf_upload.json
 '''
-        bat '''
+                    bat '''
 @echo off
-set /p MOBSF_KEY=<mobsf_api_key.txt
 for /f "tokens=2 delims=:," %%a in ('findstr "hash" mobsf_upload.json') do set HASH=%%~a
 set HASH=%HASH: =%
 set HASH=%HASH:"=%
-echo Scan hash: %HASH%
+echo Triggering scan for hash: %HASH%
 curl -s -X POST http://localhost:8010/api/v1/scan -H "X-Mobsf-Api-Key: %MOBSF_KEY%" -d "scan_type=apk&file_name=app-debug.apk&hash=%HASH%"
 echo Scan triggered
 '''
-        bat 'ping -n 120 127.0.0.1 > nul'
-        bat '''
+                    bat 'ping -n 120 127.0.0.1 > nul'
+                    bat '''
 @echo off
-set /p MOBSF_KEY=<mobsf_api_key.txt
 for /f "tokens=2 delims=:," %%a in ('findstr "hash" mobsf_upload.json') do set HASH=%%~a
 set HASH=%HASH: =%
 set HASH=%HASH:"=%
 echo Downloading PDF for hash: %HASH%
 curl -s -X POST http://localhost:8010/api/v1/download_pdf -H "X-Mobsf-Api-Key: %MOBSF_KEY%" -d "hash=%HASH%" -o mobsf-security-report.pdf
-echo PDF done
+for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
 '''
-        echo 'DAST Security Scan completed'
-    }
-    post {
-        always {
-            archiveArtifacts(
-                artifacts: 'mobsf-security-report.pdf',
-                allowEmptyArchive: true
-            )
-            bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
+                }
+                echo 'DAST Security Scan completed'
+            }
+            post {
+                always {
+                    archiveArtifacts(
+                        artifacts: 'mobsf-security-report.pdf',
+                        allowEmptyArchive: true
+                    )
+                    bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
+                }
+            }
         }
-    }
-}
 
         stage('Run Unit Tests') {
             steps {
