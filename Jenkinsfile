@@ -90,7 +90,7 @@ stage('Ktlint Code Style') {
                     file(credentialsId: 'android-keystore', variable: 'KEYSTORE_FILE'),
                     string(credentialsId: 'android-keystore-password', variable: 'KEYSTORE_PASSWORD')
                 ]) {
-                    bat "\"${JAVA_HOME}\\bin\\jarsigner.exe\" -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore \"%KEYSTORE_FILE%\" -storepass %KEYSTORE_PASSWORD% -keypass %KEYSTORE_PASSWORD% app\\build\\outputs\\apk\\release\\app-release-unsigned.apk sunflower"
+                    bat "\"${JAVA_HOME}\\bin\\jarsigner.exe\" -sigalg SHA256withRSA -digestalg SHA-256 -keystore \"%KEYSTORE_FILE%\" -storepass %KEYSTORE_PASSWORD% -keypass %KEYSTORE_PASSWORD% app\\build\\outputs\\apk\\release\\app-release-unsigned.apk sunflower"
                     echo 'APK signed successfully'
                     bat "\"%ANDROID_HOME%\\build-tools\\34.0.0\\zipalign.exe\" -f 4 app\\build\\outputs\\apk\\release\\app-release-unsigned.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk"
                     echo 'APK aligned successfully'
