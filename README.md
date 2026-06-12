@@ -1,3 +1,10 @@
+# Sunflower CI/CD Pipeline
+
+[![Build Status](https://footwork-maturing-goggles.ngrok-free.dev/buildStatus/icon?job=android-cicd-pipeline)](https://footwork-maturing-goggles.ngrok-free.dev/job/android-cicd-pipeline/)
+[![Pipeline](https://img.shields.io/badge/CI%2FCD-Jenkins-blue)](https://footwork-maturing-goggles.ngrok-free.dev/job/android-cicd-pipeline/)
+[![Security Scan](https://img.shields.io/badge/Security-MobSF-green)](https://footwork-maturing-goggles.ngrok-free.dev/job/android-cicd-pipeline/)
+[![Platform](https://img.shields.io/badge/Platform-Android-brightgreen)](https://github.com/akshaanshs/sunflower)
+[![Firebase](https://img.shields.io/badge/Testing-Firebase%20Test%20Lab-orange)](https://github.com/akshaanshs/sunflower)
 # Android Sunflower with Compose
 
 Warning: The Sunflower repository is no longer under maintenance, We are prioritizing https://github.com/android/compose-samples as the up-to-date source of truth for Compose best practises. Please use that repository and sample set to continue learning about Jetpack Compose. If you'd like to continue using Sunflower, we encourage you to maintain your own fork of the sample. 
