@@ -132,8 +132,18 @@ for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
 
         stage('Run Unit Tests') {
             steps {
-                echo 'Running unit tests...'
-                bat 'gradlew.bat testDebugUnitTest'
+                echo 'Running unit tests with coverage...'
+                bat 'gradlew.bat testDebugUnitTest jacocoTestReport'
+            }
+            post {
+                always {
+                    jacoco(
+                        execPattern: '**/**.exec',
+                        classPattern: '**/tmp/kotlin-classes/debug',
+                        sourcePattern: '**/src/main/java',
+                        exclusionPattern: '**/R.class,**/R$*.class,**/BuildConfig.*,**/Manifest*.*'
+                    )
+                }
             }
         }
 

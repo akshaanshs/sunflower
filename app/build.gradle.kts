@@ -15,6 +15,7 @@
  */
 
 plugins {
+id("jacoco")
 id("com.google.gms.google-services")
 id("com.google.firebase.firebase-perf")
   alias(libs.plugins.android.application)
@@ -25,6 +26,12 @@ id("com.google.firebase.firebase-perf")
 }
 
 android {
+buildTypes {
+        debug {
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+        }
+    }
 configurations.all {
     resolutionStrategy {
         force("com.google.guava:guava:31.1-android")
@@ -180,4 +187,27 @@ implementation("com.google.firebase:firebase-perf:21.0.1")
 
 fun getUnsplashAccess(): String? {
   return project.findProperty("unsplash_access_key") as? String
+}
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    val fileFilter = listOf(
+        "**/R.class", "**/R$*.class", "**/BuildConfig.*",
+        "**/Manifest*.*", "**/*Test*.*", "android/**/*.*"
+    )
+    val debugTree = fileTree("${buildDir}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+    sourceDirectories.setFrom(files("src/main/java"))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(fileTree(buildDir) {
+        include("**/*.exec", "**/*.ec")
+    })
 }
