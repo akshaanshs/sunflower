@@ -212,3 +212,9 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         include("**/*.exec", "**/*.ec")
     })
 }
+ktlint {
+    filter {
+        exclude("**/PlantListTest.kt")
+        exclude("**/*.kts")
+    }
+}

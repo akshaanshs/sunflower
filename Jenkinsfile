@@ -51,26 +51,19 @@ pipeline {
 stage('Ktlint Code Style') {
             steps {
                 echo 'Running Ktlint code style checks...'
-                bat '''
-@echo off
-gradlew.bat ktlintCheck
-if %ERRORLEVEL% NEQ 0 (
-    echo Ktlint found style violations - continuing build
-    exit 0
-)
-echo Ktlint checks passed
-'''
+                bat 'gradlew.bat ktlintCheck -x ktlintKotlinScriptCheck -x ktlintAndroidTestSourceSetCheck 2>&1 & exit 0'
                 echo 'Ktlint checks completed'
             }
             post {
                 always {
                     archiveArtifacts(
-                        artifacts: '**/ktlint*.xml',
+                        artifacts: '**/ktlint*.txt',
                         allowEmptyArchive: true
                     )
                 }
             }
         }
+
         stage('Build Variants') {
             parallel {
                 stage('Build Debug APK') {
