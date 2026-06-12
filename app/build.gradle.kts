@@ -1,5 +1,4 @@
 plugins {
-    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
     id("jacoco")
     id("com.google.gms.google-services")
     id("com.google.firebase.firebase-perf")
@@ -9,6 +8,9 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
 }
+
+val keystorePath = project.findProperty("keystorePath") as String?
+val keystorePassword = project.findProperty("keystorePassword") as String?
 
 android {
     configurations.all {
@@ -39,6 +41,17 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            if (keystorePath != null && keystorePassword != null) {
+                storeFile = file(keystorePath)
+                storePassword = keystorePassword
+                keyAlias = "sunflower"
+                keyPassword = keystorePassword
+            }
+        }
+    }
+
     buildTypes {
         debug {
             enableAndroidTestCoverage = true
@@ -47,6 +60,9 @@ android {
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            if (keystorePath != null && keystorePassword != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
         create("benchmark") {
             initWith(getByName("release"))
@@ -186,12 +202,4 @@ tasks.register<JacocoReport>("jacocoTestReport") {
     executionData.setFrom(fileTree(buildDir) {
         include("**/*.exec", "**/*.ec")
     })
-}
-
-ktlint {
-    ignoreFailures.set(true)
-    filter {
-        exclude("**/PlantListTest.kt")
-        exclude("**/*.kts")
-    }
 }
