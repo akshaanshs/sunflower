@@ -86,11 +86,11 @@ pipeline {
             steps {
                 echo 'Starting DAST Security Scan with MobSF...'
                 bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
-                bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
-                bat 'ping -n 90 127.0.0.1 > nul'
                 withCredentials([string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_KEY')]) {
+                    bat 'docker run -d --name mobsf-jenkins -p 8010:8000 -e MOBSF_API_KEY=%MOBSF_KEY% opensecurity/mobile-security-framework-mobsf:latest'
                     bat 'echo %MOBSF_KEY%> mobsf_api_key.txt'
                 }
+                bat 'ping -n 90 127.0.0.1 > nul'
                 bat '''
 @echo off
 set /p KEY=<mobsf_api_key.txt
@@ -99,23 +99,20 @@ curl -s -F "file=@app/build/outputs/apk/debug/app-debug.apk" http://localhost:80
 echo Upload response:
 type mobsf_upload.json
 '''
+                bat 'powershell -Command "(Get-Content mobsf_upload.json -Raw | ConvertFrom-Json).hash | Set-Content mobsf_hash.txt"'
                 bat '''
 @echo off
 set /p KEY=<mobsf_api_key.txt
-for /f "tokens=2 delims=:," %%a in ('findstr "hash" mobsf_upload.json') do set HASH=%%~a
-set HASH=%HASH: =%
-set HASH=%HASH:"=%
-echo Triggering scan for hash: %HASH%
-curl -s -X POST http://localhost:8010/api/v1/scan -H "X-Mobsf-Api-Key: %KEY%" -d "scan_type=apk&file_name=app-debug.apk&hash=%HASH%"
-echo Scan triggered
+set /p HASH=<mobsf_hash.txt
+echo Scanning hash: %HASH%
+curl -s -X POST http://localhost:8010/api/v1/scan -H "X-Mobsf-Api-Key: %KEY%" -d "hash=%HASH%" -o mobsf_scan.json
+echo Scan finished
 '''
-                bat 'ping -n 120 127.0.0.1 > nul'
+                bat 'ping -n 30 127.0.0.1 > nul'
                 bat '''
 @echo off
 set /p KEY=<mobsf_api_key.txt
-for /f "tokens=2 delims=:," %%a in ('findstr "hash" mobsf_upload.json') do set HASH=%%~a
-set HASH=%HASH: =%
-set HASH=%HASH:"=%
+set /p HASH=<mobsf_hash.txt
 echo Downloading PDF for hash: %HASH%
 curl -s -X POST http://localhost:8010/api/v1/download_pdf -H "X-Mobsf-Api-Key: %KEY%" -d "hash=%HASH%" -o mobsf-security-report.pdf
 for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
