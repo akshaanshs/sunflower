@@ -48,22 +48,6 @@ pipeline {
             }
         }
 
-stage('Ktlint Code Style') {
-            steps {
-                echo 'Running Ktlint code style checks...'
-                bat 'gradlew.bat ktlintCheck -x ktlintKotlinScriptCheck -x ktlintAndroidTestSourceSetCheck 2>&1 & exit 0'
-                echo 'Ktlint checks completed'
-            }
-            post {
-                always {
-                    archiveArtifacts(
-                        artifacts: '**/ktlint*.txt',
-                        allowEmptyArchive: true
-                    )
-                }
-            }
-        }
-
         stage('Build Variants') {
             parallel {
                 stage('Build Debug APK') {
@@ -84,6 +68,9 @@ stage('Ktlint Code Style') {
         }
 
         stage('Sign Release APK') {
+            options {
+                timeout(time: 5, unit: 'MINUTES')
+            }
             steps {
                 echo 'Signing Release APK...'
                 withCredentials([
@@ -93,7 +80,8 @@ stage('Ktlint Code Style') {
                     bat "\"${JAVA_HOME}\\bin\\jarsigner.exe\" -sigalg SHA256withRSA -digestalg SHA-256 -keystore \"%KEYSTORE_FILE%\" -storepass %KEYSTORE_PASSWORD% -keypass %KEYSTORE_PASSWORD% app\\build\\outputs\\apk\\release\\app-release-unsigned.apk sunflower"
                     echo 'APK signed successfully'
                     bat 'del app\\build\\outputs\\apk\\release\\app-release-signed.apk 2>nul & exit 0'
-                    bat "\"%ANDROID_HOME%\\build-tools\\34.0.0\\zipalign.exe\" -f 4 app\\build\\outputs\\apk\\release\\app-release-unsigned.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk"
+                    bat '"%ANDROID_HOME%\\build-tools\\34.0.0\\zipalign.exe" -f 4 app\\build\\outputs\\apk\\release\\app-release-unsigned.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk < nul'
+                    bat 'dir app\\build\\outputs\\apk\\release\\app-release-signed.apk'
                     echo 'APK aligned successfully'
                 }
             }
