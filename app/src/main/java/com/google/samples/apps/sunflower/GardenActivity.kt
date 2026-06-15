@@ -45,3 +45,4 @@ class GardenActivity : ComponentActivity() {
             throw RuntimeException("Test Crash for Crashlytics Demo")
         }, 5000)
     }
+}
