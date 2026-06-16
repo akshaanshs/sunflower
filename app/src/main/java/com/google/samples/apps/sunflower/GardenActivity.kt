@@ -23,8 +23,6 @@ import androidx.activity.enableEdgeToEdge
 import com.google.samples.apps.sunflower.compose.SunflowerApp
 import com.google.samples.apps.sunflower.ui.SunflowerTheme
 import dagger.hilt.android.AndroidEntryPoint
-import android.os.Handler
-import android.os.Looper
 
 @AndroidEntryPoint
 class GardenActivity : ComponentActivity() {
@@ -39,10 +37,6 @@ class GardenActivity : ComponentActivity() {
                 SunflowerApp()
             }
         }
-
-        // TEMPORARY: Force a test crash after 5 seconds for Crashlytics demo
-        Handler(Looper.getMainLooper()).postDelayed({
-            throw RuntimeException("Test Crash for Crashlytics Demo")
-        }, 5000)
+        
     }
 }
