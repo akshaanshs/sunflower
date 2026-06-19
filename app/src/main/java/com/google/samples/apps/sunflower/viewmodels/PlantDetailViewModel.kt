@@ -29,6 +29,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
 /**
@@ -57,8 +60,28 @@ class PlantDetailViewModel @Inject constructor(
 
     fun addPlantToGarden() {
         viewModelScope.launch {
-            gardenPlantingRepository.createGardenPlanting(plantId)
-            _showSnackbar.value = true
+            try {
+                gardenPlantingRepository.createGardenPlanting(plantId)
+                _showSnackbar.value = true
+                Firebase.analytics.logEvent("form_submit") {
+                    param("status", "success")
+                    param("form_name", "add_plant_to_garden")
+                    param("plant_id", plantId)
+                    param("city", "Chandigarh")
+                    param("state", "Punjab")
+                    param("district", "Mohali")
+                }
+            } catch (e: Exception) {
+                Firebase.analytics.logEvent("form_submit") {
+                    param("status", "failed")
+                    param("form_name", "add_plant_to_garden")
+                    param("plant_id", plantId)
+                    param("error_reason", e.message ?: "unknown_error")
+                    param("city", "Chandigarh")
+                    param("state", "Punjab")
+                    param("district", "Mohali")
+                }
+            }
         }
     }
 
