@@ -191,6 +191,56 @@ for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
                 echo "Both APKs archived successfully"
             }
         }
+stage('Send FCM Notification') {
+    steps {
+        echo 'Sending FCM push notification...'
+        withCredentials([file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')]) {
+            bat '''
+                pip install google-auth --quiet
+                python -c "
+import google.auth.transport.requests
+import google.oauth2.service_account
+import urllib.request
+import json
+
+SCOPES = ['https://www.googleapis.com/auth/firebase.messaging']
+SERVICE_ACCOUNT_FILE = r'%GCLOUD_KEY%'
+PROJECT_ID = 'sunflower-cicd'
+FCM_TOKEN = 'f9zolC_QQJ-kVSW4rz30g7:APA91bGs6YeJK2Ivpe5skRlkk6HWD4PyTT5yNfqjEa6APRAparHg5aFoyUIDoPT88KvCqbEvr8XbfkmuM4-xtiSnYUbMbUNGiq1mo7JyaT3G3eo7IROpJBE'
+
+credentials = google.oauth2.service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+credentials.refresh(google.auth.transport.requests.Request())
+access_token = credentials.token
+
+url = f'https://fcm.googleapis.com/v1/projects/{PROJECT_ID}/messages:send'
+message = {
+    'message': {
+        'token': FCM_TOKEN,
+        'notification': {
+            'title': 'Build %BUILD_NUMBER% Successful!',
+            'body': 'New Sunflower APK is ready for testing.'
+        },
+        'data': {
+            'build_number': '%BUILD_NUMBER%'
+        }
+    }
+}
+
+data = json.dumps(message).encode('utf-8')
+req = urllib.request.Request(url, data=data, headers={
+    'Authorization': f'Bearer {access_token}',
+    'Content-Type': 'application/json'
+})
+response = urllib.request.urlopen(req)
+print('FCM Response:', response.read().decode('utf-8'))
+print('Notification sent successfully!')
+"
+            '''
+        }
+        echo 'FCM notification stage completed!'
+    }
+}
+	
     }
 
     post {
