@@ -59,28 +59,26 @@ pipeline {
                 }
                 stage('Build Release APK') {
                     steps {
-                        echo 'Building and signing Release APK...'
-                        withCredentials([
-                            file(credentialsId: 'android-keystore', variable: 'KEYSTORE_FILE'),
-                            string(credentialsId: 'android-keystore-password', variable: 'KEYSTORE_PASSWORD')
-                        ]) {
-                            bat 'gradlew.bat assembleRelease -PkeystorePath="%KEYSTORE_FILE%" -PkeystorePassword=%KEYSTORE_PASSWORD%'
-                        }
-                        echo 'Release APK built and signed successfully'
+                        echo 'Building Release APK...'
+                        bat 'gradlew.bat assembleRelease'
+                        echo 'Release APK built successfully'
                     }
                 }
             }
         }
 
-        stage('Verify Signed APK') {
-            options {
-                timeout(time: 5, unit: 'MINUTES')
-            }
+        stage('Sign Release APK') {
             steps {
-                echo 'Verifying signed Release APK...'
-                bat 'copy /Y app\\build\\outputs\\apk\\release\\app-release.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk'
-                bat 'call "%ANDROID_HOME%\\build-tools\\34.0.0\\apksigner.bat" verify app\\build\\outputs\\apk\\release\\app-release-signed.apk'
-                echo 'APK signature verified successfully'
+                echo 'Signing Release APK...'
+                withCredentials([
+                    file(credentialsId: 'android-keystore', variable: 'KEYSTORE_FILE'),
+                    string(credentialsId: 'android-keystore-password', variable: 'KEYSTORE_PASSWORD')
+                ]) {
+                    bat "\"${JAVA_HOME}\\bin\\jarsigner.exe\" -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore \"%KEYSTORE_FILE%\" -storepass %KEYSTORE_PASSWORD% -keypass %KEYSTORE_PASSWORD% app\\build\\outputs\\apk\\release\\app-release-unsigned.apk sunflower"
+                    echo 'APK signed successfully'
+                    bat "\"%ANDROID_HOME%\\build-tools\\34.0.0\\zipalign.exe\" -v 4 app\\build\\outputs\\apk\\release\\app-release-unsigned.apk app\\build\\outputs\\apk\\release\\app-release-signed.apk"
+                    echo 'APK aligned successfully'
+                }
             }
         }
 
@@ -88,37 +86,13 @@ pipeline {
             steps {
                 echo 'Starting DAST Security Scan with MobSF...'
                 bat 'docker stop mobsf-jenkins 2>nul & docker rm mobsf-jenkins 2>nul & exit 0'
-                withCredentials([string(credentialsId: 'mobsf-api-key', variable: 'MOBSF_KEY')]) {
-                    bat 'docker run -d --name mobsf-jenkins -p 8010:8000 -e MOBSF_API_KEY=%MOBSF_KEY% opensecurity/mobile-security-framework-mobsf:latest'
-                    bat 'echo %MOBSF_KEY%> mobsf_api_key.txt'
-                }
+                bat 'docker run -d --name mobsf-jenkins -p 8010:8000 opensecurity/mobile-security-framework-mobsf:latest'
+                bat 'ping -n 60 127.0.0.1 > nul'
+                bat 'powershell -Command "docker logs mobsf-jenkins 2>&1 | Where-Object { $_ -match \'REST API Key:\' } | Select-Object -First 1 | ForEach-Object { ($_ -split \'REST API Key:\')[1].Trim() -replace \'[^a-fA-F0-9]\',\'\' } | Set-Content mobsf_api_key.txt; Write-Host (\'Key: \' + (Get-Content mobsf_api_key.txt))"'
+                bat 'powershell -ExecutionPolicy Bypass -Command "$key=(Get-Content mobsf_api_key.txt).Trim(); $r=(& curl -s -F \'file=@app/build/outputs/apk/debug/app-debug.apk\' http://localhost:8010/api/v1/upload -H (\'X-Mobsf-Api-Key: \'+$key)); Write-Host (\'Upload: \'+$r); Set-Content mobsf_upload.json $r"'
+                bat 'powershell -ExecutionPolicy Bypass -Command "$key=(Get-Content mobsf_api_key.txt).Trim(); $h=((Get-Content mobsf_upload.json|ConvertFrom-Json).hash); Write-Host (\'Hash: \'+$h); & curl -s -X POST http://localhost:8010/api/v1/scan -H (\'X-Mobsf-Api-Key: \'+$key) -d (\'scan_type=apk&file_name=app-debug.apk&hash=\'+$h); Write-Host \'Scan done\'"'
                 bat 'ping -n 90 127.0.0.1 > nul'
-                bat '''
-@echo off
-set /p KEY=<mobsf_api_key.txt
-echo Upload starting...
-curl -s -F "file=@app/build/outputs/apk/debug/app-debug.apk" http://localhost:8010/api/v1/upload -H "X-Mobsf-Api-Key: %KEY%" -o mobsf_upload.json
-echo Upload response:
-type mobsf_upload.json
-'''
-                bat 'powershell -Command "(Get-Content mobsf_upload.json -Raw | ConvertFrom-Json).hash | Set-Content mobsf_hash.txt"'
-                bat '''
-@echo off
-set /p KEY=<mobsf_api_key.txt
-set /p HASH=<mobsf_hash.txt
-echo Scanning hash: %HASH%
-curl -s -X POST http://localhost:8010/api/v1/scan -H "X-Mobsf-Api-Key: %KEY%" -d "hash=%HASH%" -o mobsf_scan.json
-echo Scan finished
-'''
-                bat 'ping -n 30 127.0.0.1 > nul'
-                bat '''
-@echo off
-set /p KEY=<mobsf_api_key.txt
-set /p HASH=<mobsf_hash.txt
-echo Downloading PDF for hash: %HASH%
-curl -s -X POST http://localhost:8010/api/v1/download_pdf -H "X-Mobsf-Api-Key: %KEY%" -d "hash=%HASH%" -o mobsf-security-report.pdf
-for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
-'''
+                bat 'powershell -ExecutionPolicy Bypass -Command "$key=(Get-Content mobsf_api_key.txt).Trim(); $h=((Get-Content mobsf_upload.json|ConvertFrom-Json).hash); Write-Host (\'Downloading PDF hash: \'+$h); & curl -s -X POST http://localhost:8010/api/v1/download_pdf -H (\'X-Mobsf-Api-Key: \'+$key) -d (\'hash=\'+$h) -o mobsf-security-report.pdf; Write-Host (\'PDF bytes: \'+((Get-Item mobsf-security-report.pdf).Length))"'
                 echo 'DAST Security Scan completed'
             }
             post {
@@ -134,18 +108,8 @@ for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
 
         stage('Run Unit Tests') {
             steps {
-                echo 'Running unit tests with coverage...'
-                bat 'gradlew.bat testDebugUnitTest jacocoTestReport'
-            }
-            post {
-                always {
-                    jacoco(
-                        execPattern: '**/**.exec',
-                        classPattern: '**/tmp/kotlin-classes/debug',
-                        sourcePattern: '**/src/main/java',
-                        exclusionPattern: '**/R.class,**/R$*.class,**/BuildConfig.*,**/Manifest*.*'
-                    )
-                }
+                echo 'Running unit tests...'
+                bat 'gradlew.bat testDebugUnitTest'
             }
         }
 
@@ -156,7 +120,7 @@ for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
                     file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')
                 ]) {
                     bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" auth activate-service-account --key-file="%GCLOUD_KEY%" --project=sunflower-cicd'
-                    bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run --type robo --app app\\build\\outputs\\apk\\debug\\app-debug.apk --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait --timeout 3m --project sunflower-cicd || exit 0'
+                    bat '"C:\\Users\\aksha\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.cmd" firebase test android run --type robo --app app\\build\\outputs\\apk\\debug\\app-debug.apk --device model=MediumPhone.arm,version=34,locale=en,orientation=portrait --timeout 3m --project sunflower-cicd'
                 }
                 echo 'Firebase Test Lab completed successfully'
             }
@@ -191,31 +155,6 @@ for %%A in (mobsf-security-report.pdf) do echo PDF size: %%~zA bytes
                 echo "Both APKs archived successfully"
             }
         }
-stage('Send FCM Notification') {
-    steps {
-        echo 'Sending FCM push notification...'
-        withCredentials([file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')]) {
-            bat 'pip install google-auth --quiet'
-            bat 'python fcm_notify.py "%GCLOUD_KEY%" "%BUILD_NUMBER%"'
-        }
-        echo 'FCM notification sent!'
-    }
-}
-data = json.dumps(message).encode('utf-8')
-req = urllib.request.Request(url, data=data, headers={
-    'Authorization': f'Bearer {access_token}',
-    'Content-Type': 'application/json'
-})
-response = urllib.request.urlopen(req)
-print('FCM Response:', response.read().decode('utf-8'))
-print('Notification sent successfully!')
-"
-            '''
-        }
-        echo 'FCM notification stage completed!'
-    }
-}
-	
     }
 
     post {
