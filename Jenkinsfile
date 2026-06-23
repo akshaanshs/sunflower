@@ -195,32 +195,12 @@ stage('Send FCM Notification') {
     steps {
         echo 'Sending FCM push notification...'
         withCredentials([file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')]) {
-            bat """
-                pip install google-auth --quiet
-                echo import google.auth.transport.requests > fcm_notify.py
-                echo import google.oauth2.service_account >> fcm_notify.py
-                echo import urllib.request >> fcm_notify.py
-                echo import json >> fcm_notify.py
-                echo SCOPES = ['https://www.googleapis.com/auth/firebase.messaging'] >> fcm_notify.py
-                echo SERVICE_ACCOUNT_FILE = r'%GCLOUD_KEY%' >> fcm_notify.py
-                echo PROJECT_ID = 'sunflower-cicd' >> fcm_notify.py
-                echo FCM_TOKEN = 'f9zolC_QQJ-kVSW4rz30g7:APA91bGs6YeJK2Ivpe5skRlkk6HWD4PyTT5yNfqjEa6APRAparHg5aFoyUIDoPT88KvCqbEvr8XbfkmuM4-xtiSnYUbMbUNGiq1mo7JyaT3G3eo7IROpJBE' >> fcm_notify.py
-                echo credentials = google.oauth2.service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES) >> fcm_notify.py
-                echo credentials.refresh(google.auth.transport.requests.Request()) >> fcm_notify.py
-                echo access_token = credentials.token >> fcm_notify.py
-                echo url = f'https://fcm.googleapis.com/v1/projects/{PROJECT_ID}/messages:send' >> fcm_notify.py
-                echo message = {'message': {'token': FCM_TOKEN, 'notification': {'title': 'Build ${BUILD_NUMBER} Successful!', 'body': 'New Sunflower APK is ready!'}, 'data': {'build_number': '${BUILD_NUMBER}'}}} >> fcm_notify.py
-                echo data = json.dumps(message).encode('utf-8') >> fcm_notify.py
-                echo req = urllib.request.Request(url, data=data, headers={'Authorization': f'Bearer {access_token}', 'Content-Type': 'application/json'}) >> fcm_notify.py
-                echo response = urllib.request.urlopen(req) >> fcm_notify.py
-                echo print('FCM Response:', response.read().decode('utf-8')) >> fcm_notify.py
-                python fcm_notify.py
-            """
+            bat 'pip install google-auth --quiet'
+            bat 'python fcm_notify.py "%GCLOUD_KEY%" "%BUILD_NUMBER%"'
         }
         echo 'FCM notification sent!'
     }
 }
-
 data = json.dumps(message).encode('utf-8')
 req = urllib.request.Request(url, data=data, headers={
     'Authorization': f'Bearer {access_token}',
