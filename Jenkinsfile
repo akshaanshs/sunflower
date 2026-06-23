@@ -139,7 +139,7 @@ pipeline {
                     onlyIfSuccessful: true
                 )
                 archiveArtifacts(
-                    artifacts: 'app/build/outputs/apk/release/app-release-signed.apk',
+                    artifacts: 'app/build/outputs/apk/release/app-release.apk',
                     fingerprint: true,
                     onlyIfSuccessful: true
                 )
