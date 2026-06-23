@@ -147,6 +147,16 @@ pipeline {
                 echo "Both APKs archived successfully"
             }
         }
+	stage('Send FCM Notification') {
+            steps {
+                echo 'Sending FCM push notification...'
+                withCredentials([file(credentialsId: 'firebase-service-account', variable: 'GCLOUD_KEY')]) {
+                    bat 'pip install google-auth --quiet'
+                    bat 'python fcm_notify.py "%GCLOUD_KEY%" "%BUILD_NUMBER%"'
+                }
+                echo 'FCM notification sent!'
+            }
+        }
     }
 
     post {
