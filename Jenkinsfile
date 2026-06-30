@@ -72,7 +72,17 @@ pipeline {
             }
         }
 
-               
+          stage('OWASP ZAP DAST Scan') {
+    steps {
+        echo 'Running OWASP ZAP baseline scan against Unsplash API...'
+        bat 'docker pull ghcr.io/zaproxy/zaproxy:stable'
+        bat """
+            docker run -v "%WORKSPACE%":/zap/wrk/:rw -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t https://api.unsplash.com -r zap_report.html -I
+        """
+        archiveArtifacts artifacts: 'zap_report.html', allowEmptyArchive: true
+        echo 'OWASP ZAP scan complete, report archived.'
+    }
+}     
 
         stage('DAST Security Scan') {
             steps {
